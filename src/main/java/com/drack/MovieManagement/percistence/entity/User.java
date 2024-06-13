@@ -2,6 +2,8 @@ package com.drack.MovieManagement.percistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class User {
     @Id
@@ -11,10 +13,21 @@ public class User {
     @Column(nullable = false)
     private String username;
 
+    private String name;
+
     @Column(nullable = false)
     private String password;
 
-    private String name;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    private List<Rating> ratings;
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
 
     public String getUsername() {
         return username;

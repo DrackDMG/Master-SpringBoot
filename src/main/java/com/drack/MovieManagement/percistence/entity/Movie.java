@@ -2,8 +2,10 @@ package com.drack.MovieManagement.percistence.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
-public class movie {
+public class Movie {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,6 +20,18 @@ public class movie {
     private String director;
 
     private int year;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "movie")
+    private List<Rating> ratings;
+
+    public List<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
 
     public Long getId() {
         return id;
