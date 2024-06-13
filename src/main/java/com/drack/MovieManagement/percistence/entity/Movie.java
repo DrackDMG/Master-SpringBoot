@@ -1,5 +1,6 @@
 package com.drack.MovieManagement.percistence.entity;
 
+import com.drack.MovieManagement.util.MovieGenre;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,7 +15,8 @@ public class Movie {
     @Column(nullable = false)
     private String title;
 
-    private String genre;
+    @Enumerated(EnumType.STRING)
+    private MovieGenre genre;
 
     @Column(nullable = false)
     private String director;
@@ -49,11 +51,11 @@ public class Movie {
         this.title = title;
     }
 
-    public String getGenre() {
+    public MovieGenre getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(MovieGenre genre) {
         this.genre = genre;
     }
 
