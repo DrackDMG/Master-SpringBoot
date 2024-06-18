@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteOneByUsername(String username) {
         //User user = this.findOneByUsername(username);
-      //  userRepository.delete(user);
+        //  userRepository.delete(user);
          if (userRepository.deleteByUsername(username) != 1) {
              throw new ObjectNotFoundException("[user:" + username + "]");
          }

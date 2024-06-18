@@ -5,6 +5,8 @@ public class ObjectNotFoundException extends RuntimeException{
     private final Throwable cause;
 
     public ObjectNotFoundException(String objectNotFoundName) {
+
+
         this.objectNotFoundName = objectNotFoundName;
         cause = null;
     }
@@ -16,7 +18,13 @@ public class ObjectNotFoundException extends RuntimeException{
 
     @Override
     public String getMessage() {
-        return super.getMessage()
+        String message = super.getMessage();
+
+        if (message == null) {
+            message = "";
+        }
+
+        return message
                 .concat("(Object Not Found: ")
                 .concat(this.objectNotFoundName).concat(")");
     }
