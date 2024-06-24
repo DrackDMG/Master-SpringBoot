@@ -1,9 +1,11 @@
 package com.drack.MovieManagement.controller;
 
+import com.drack.MovieManagement.exception.ObjectNotFoundException;
 import com.drack.MovieManagement.percistence.entity.Movie;
 import com.drack.MovieManagement.percistence.entity.User;
 import com.drack.MovieManagement.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,19 +19,23 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> findAll(@RequestParam(required = false) String name) {
+    public ResponseEntity<List<User>> findAll(@RequestParam(required = false) String name) {
         List<User> users = null;
         if(StringUtils.hasText(name)){
             users = userService.findAllByName(name);
         }else {
             users = userService.findAll();
         }
-        return users;
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{username}")
-    public User findByUsername(@PathVariable String username) {
-        return userService.findOneByUsername(username);
+    public ResponseEntity<User> findByUsername(@PathVariable String username) {
+        try {
+            return ResponseEntity.ok(userService.findOneByUsername(username));
+        }catch (ObjectNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 
