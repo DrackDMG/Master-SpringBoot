@@ -61,4 +61,15 @@ public class MovieController {
         URI location = URI.create(baseUrl + "/" + createdMovie.getId());
         return ResponseEntity.created(location).body(createdMovie);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Movie> update(@PathVariable Long id, @RequestBody Movie movie) {
+        try {
+            return ResponseEntity.ok(movieService.updateOneById(id, movie));
+        } catch (ObjectNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 }
