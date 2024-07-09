@@ -5,6 +5,7 @@ import com.drack.MovieManagement.exception.ObjectNotFoundException;
 import com.drack.MovieManagement.percistence.entity.Movie;
 import com.drack.MovieManagement.service.MovieService;
 import com.drack.MovieManagement.util.MovieGenre;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 
 //@Controller
@@ -52,5 +54,11 @@ public class MovieController {
         }
     }
 
-
+    @PostMapping
+    public ResponseEntity<Movie> create(@RequestBody Movie movie, HttpServletRequest request) {
+        Movie createdMovie = movieService.createOne(movie);
+        String baseUrl = request.getRequestURL().toString();
+        URI location = URI.create(baseUrl + "/" + createdMovie.getId());
+        return ResponseEntity.created(location).body(createdMovie);
+    }
 }
